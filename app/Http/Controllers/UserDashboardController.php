@@ -19,7 +19,7 @@ class UserDashboardController extends Controller
     function orderDetails($order){
         $orderDetails = DB::table('orders')->where('orders.order_id', $order)->where('orders.user_id', Auth::user()->email)
             ->join('order_addresses', 'orders.order_id', '=', 'order_addresses.order_id')
-            ->select('orders.order_id', 'orders.order_status', 'orders.total_qty', 'orders.subtotal_price', 'orders.grand_price', 'orders.delivery_fee', 'orders.created_at', 'orders.updated_at',
+            ->select('orders.order_id', 'orders.payment_status', 'orders.order_status', 'orders.total_qty', 'orders.subtotal_price', 'orders.grand_price', 'orders.delivery_fee', 'orders.created_at', 'orders.updated_at',
                 'order_addresses.full_name', 'order_addresses.phone', 'order_addresses.street_address', 'order_addresses.landmark', 'order_addresses.city', 'order_addresses.province', 'order_addresses.zip_code')
             ->first();
         $orderProducts = OrderProduct::select('product', 'price', 'qty')->where('order_id', $order)->get();

@@ -176,7 +176,7 @@
                                                     <div class="manage-o__text-2 u-c-secondary">${{ $orderDetails->grand_price }}</div>
                                                 </div>
 
-                                                <span class="dash__text-2">Paid by Cash on Delivery</span>
+                                                <span class="dash__text-2">Payment Status: <span class="manage-o__badge badge--processing" style="text-transform: uppercase;"> {{ $orderDetails->payment_status }} </span></span>
                                             </div>
                                         </div>
                                     </div>

@@ -4,6 +4,11 @@
 @endsection
 
 @section('page-css')
+    <style>
+        .text-danger{
+            color: orangered;
+        }
+    </style>
 @endsection
 
 @section('app-content')
@@ -41,7 +46,8 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12">
-                            <form action="{{ route('place.order') }}" method="POST">
+{{--                            <form action="{{ route('place.order') }}" method="POST">--}}
+                            <form action="{{ url('/pay') }}" method="POST">
                                 @csrf
                             <div id="checkout-msg-group">
                                 <div class="msg">
@@ -109,7 +115,7 @@
                                         <div class="gl-inline">
                                             <div class="u-s-m-b-15">
 
-                                                <label class="gl-label" for="billing-fname">FIRST NAME *</label>
+                                                <label class="gl-label @error('address-fname') text-danger @enderror" for="billing-fname">FIRST NAME *</label>
 
                                                 <input class="input-text input-text--primary-style ax-fname" type="text" name="address-fname" ></div>
                                             <div class="u-s-m-b-15">
@@ -124,7 +130,7 @@
                                         <!--====== E-MAIL ======-->
                                         <div class="u-s-m-b-15">
 
-                                            <label class="gl-label" for="billing-email">E-MAIL *</label>
+                                            <label class="gl-label @error('address-email') text-danger @enderror" for="billing-email">E-MAIL</label>
 
                                             <input class="input-text input-text--primary-style ax-email" type="text" name="address-email" ></div>
                                         <!--====== End - E-MAIL ======-->
@@ -133,7 +139,7 @@
                                         <!--====== PHONE ======-->
                                         <div class="u-s-m-b-15">
 
-                                            <label class="gl-label" for="billing-phone">PHONE *</label>
+                                            <label class="gl-label @error('address-phone') text-danger @enderror" for="billing-phone">PHONE *</label>
 
                                             <input class="input-text input-text--primary-style ax-phone" type="text" name="address-phone" ></div>
                                         <!--====== End - PHONE ======-->
@@ -142,12 +148,12 @@
                                         <!--====== Street Address ======-->
                                         <div class="u-s-m-b-15">
 
-                                            <label class="gl-label" for="billing-street">STREET ADDRESS *</label>
+                                            <label class="gl-label @error('address-street') text-danger @enderror" for="billing-street">STREET ADDRESS *</label>
 
                                             <input class="input-text input-text--primary-style ax-street" type="text" name="address-street" placeholder="House name and street name" ></div>
                                         <div class="u-s-m-b-15">
 
-                                            <label class="gl-label" for="billing-street-optional">LANDMARK</label>
+                                            <label class="gl-label @error('address-landmark') text-danger @enderror" for="billing-street-optional">LANDMARK *</label>
 
                                             <input class="input-text input-text--primary-style ax-landmark" type="text" name="address-landmark" placeholder="Apartment, suite unit etc. (optional)" ></div>
                                         <!--====== End - Street Address ======-->
@@ -155,7 +161,7 @@
                                         <!--====== Town / City ======-->
                                         <div class="u-s-m-b-15">
 
-                                            <label class="gl-label" for="billing-town-city">TOWN/CITY *</label>
+                                            <label class="gl-label @error('address-city') text-danger @enderror" for="billing-town-city">TOWN/CITY *</label>
 
                                             <input class="input-text input-text--primary-style ax-city" type="text" name="address-city" ></div>
                                         <!--====== End - Town / City ======-->
@@ -165,7 +171,7 @@
                                         <div class="u-s-m-b-15">
 
                                             <!--====== Select Box ======-->
-                                            <label class="gl-label" for="billing-state">STATE/PROVINCE *</label>
+                                            <label class="gl-label @error('address-state') text-danger @enderror" for="billing-state">STATE/PROVINCE *</label>
                                             <select class="select-box select-box--primary-style ax-province" name="address-state" >
                                                 <option class="ax-province2" value="">Choose State/Province</option>
                                                 <option value="barishal">Barishal</option>
@@ -185,7 +191,7 @@
                                         <!--====== ZIP/POSTAL ======-->
                                         <div class="u-s-m-b-15">
 
-                                            <label class="gl-label" for="billing-zip">ZIP/POSTAL CODE *</label>
+                                            <label class="gl-label @error('address-postal') text-danger @enderror" for="billing-zip">ZIP/POSTAL CODE *</label>
 
                                             <input class="input-text input-text--primary-style ax-postal" type="text" name="address-postal" placeholder="Zip/Postal Code" ></div>
                                         <!--====== End - ZIP/POSTAL ======-->
@@ -196,15 +202,6 @@
                                             <textarea class="text-area text-area--primary-style ax-note" id="order-note" name="note"></textarea></div>
                                         <div>
                                             <!-- <button class="btn btn--e-transparent-brand-b-2" type="submit">SAVE FOR FUTURE</button> -->
-                                            @if ($errors->any())
-                                                <div class="alert alert-danger">
-                                                    <ul>
-                                                        @foreach ($errors->all() as $error)
-                                                            <li style="color: orangered;">{{ $error }}</li>
-                                                        @endforeach
-                                                    </ul>
-                                                </div>
-                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -314,10 +311,10 @@
                                                     <!--====== Radio Box ======-->
                                                     <div class="radio-box">
 
-                                                        <input type="radio" id="pay-with-check" name="payment" disabled>
+                                                        <input type="radio" id="pay-with-sslcommerz" value="payment with sslcommerz" name="payment">
                                                         <div class="radio-box__state radio-box__state--primary">
 
-                                                            <label class="radio-box__label" for="pay-with-check">Pay With Check</label></div>
+                                                            <label class="radio-box__label" for="pay-with-check">Pay With SSLCOMMERZ</label></div>
                                                     </div>
                                                     <!--====== End - Radio Box ======-->
 
@@ -366,7 +363,6 @@
                                                     <a class="gl-link">Terms of Service.</a>
                                                 </div>
                                                 <div>
-
                                                     <button class="btn btn--e-brand-b-2" type="submit">PLACE ORDER</button></div>
                                             </div>
                                         </div>

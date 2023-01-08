@@ -4,6 +4,7 @@ use App\Http\Controllers\AddressBookController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SslCommerzPaymentController;
 use App\Http\Controllers\UserDashboardController;
 use Illuminate\Support\Facades\Route;
 
@@ -67,6 +68,21 @@ Route::middleware('auth')->group(function () {
         Route::get('/checkout', 'checkout')->name('checkout');
         Route::post('/order', 'placeOrder')->name('place.order');
     });
+
 });
+
+// SSLCOMMERZ Start
+Route::get('/example1', [SslCommerzPaymentController::class, 'exampleEasyCheckout']);
+Route::get('/example2', [SslCommerzPaymentController::class, 'exampleHostedCheckout']);
+
+Route::post('/pay', [SslCommerzPaymentController::class, 'index']);
+Route::post('/pay-via-ajax', [SslCommerzPaymentController::class, 'payViaAjax']);
+
+Route::post('/success', [SslCommerzPaymentController::class, 'success']);
+Route::post('/fail', [SslCommerzPaymentController::class, 'fail']);
+Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
+
+Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
+//SSLCOMMERZ END
 
 require __DIR__.'/auth.php';

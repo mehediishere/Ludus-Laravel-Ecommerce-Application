@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('coupon_id')->nullable();
             $table->string('order_status');
             $table->string('payment_status');
+            $table->string('transaction_id')->nullable();
             $table->integer('total_qty');
             $table->double('delivery_fee',8,2)->default(0.00);
             $table->double('subtotal_price',8,2)->default(0.00);
